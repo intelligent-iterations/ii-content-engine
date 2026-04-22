@@ -1,3 +1,12 @@
+# BRANCH POLICY — READ FIRST
+
+**This repository MUST always be checked out on the `dev` branch. No exceptions.**
+
+- Never switch this working copy to `main`, a feature branch, or detached HEAD. All work happens on `dev`.
+- If `git submodule update`, a merge, or any tool moves something off `dev`, switch it back to `dev` immediately before continuing.
+
+---
+
 # CLAUDE.md
 
 ## Repo Role
