@@ -113,6 +113,10 @@ For video work, the agent can scaffold a saved compilation markdown and `asset-m
 
 The repo now also has a higher-level video workflow CLI for `prepare`, `render`, `queue`, and `ship`, so the operational path is: define the reusable template/run artifacts, render the output, then move it into the scheduled posting queue.
 
+Reviewed Xquik exports can be converted into saved research artifacts with
+`npm run research:xquik`. See [Xquik Research Imports](docs/XQUIK_RESEARCH.md)
+for the JSON and JSONL import shape, validation behavior, and review checklist.
+
 For continuity-sensitive story videos, the default chain is:
 
 `hero portrait -> reference sheet -> portrait scene-start frame -> clip -> stitched final`
