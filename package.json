@@ -15,6 +15,7 @@
     "auth:grok:image": "node code/image/grok-image-automation.js --save-login --headed",
     "generate": "node code/cli/carousel.js",
     "generate:v2": "node code/cli/carousel.js",
+    "research:xquik": "node code/cli/xquik-research.js",
     "test:grok:image": "node code/test-grok-image.js",
     "test:overlay": "node code/test-overlay.js",
     "video": "node code/cli/video-compilation.js",
