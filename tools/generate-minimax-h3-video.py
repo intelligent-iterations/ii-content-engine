@@ -67,8 +67,10 @@ def validate_profile(args: argparse.Namespace) -> int:
         raise ValueError("source canvas exceeds MiniMax H3's 768x1344 native area")
     if args.fps != 24:
         raise ValueError("MiniMax H3 native generation requires 24 fps")
-    if not 0 < args.duration <= 15:
-        raise ValueError("duration must be greater than zero and at most 15 seconds")
+    if (args.width, args.height) != (1280, 736):
+        raise ValueError("this quality profile requires the official 1280x736 source canvas")
+    if args.duration != 15:
+        raise ValueError("this quality profile requires a full 15-second source generation")
     if args.steps != 20:
         raise ValueError("the pinned official quality profile requires exactly 20 steps")
     if args.final_width != 1280 or args.final_height != 720 or args.final_duration != 15:
@@ -289,6 +291,23 @@ def ffprobe(path: Path) -> dict[str, Any]:
     return json.loads(result.stdout)
 
 
+def validate_final_probe(probe: dict[str, Any], args: argparse.Namespace) -> None:
+    streams = probe.get("streams") or []
+    video = next((item for item in streams if item.get("codec_type") == "video"), None)
+    audio = next((item for item in streams if item.get("codec_type") == "audio"), None)
+    duration = float((probe.get("format") or {}).get("duration") or 0)
+    if not video or (video.get("width"), video.get("height")) != (args.final_width, args.final_height):
+        raise RuntimeError(f"final video failed resolution gate: {video}")
+    if video.get("codec_name") != "h264" or video.get("pix_fmt") != "yuv420p":
+        raise RuntimeError(f"final video failed H.264/yuv420p compatibility gate: {video}")
+    if not audio or audio.get("codec_name") != "aac" or int(audio.get("channels") or 0) != 2:
+        raise RuntimeError(f"final video failed AAC stereo-audio gate: {audio}")
+    if abs(duration - args.final_duration) > 0.02:
+        raise RuntimeError(f"final video failed duration gate: got {duration}, expected {args.final_duration}")
+    if str(video.get("avg_frame_rate")) != "24/1":
+        raise RuntimeError(f"final video failed frame-rate gate: {video.get('avg_frame_rate')}")
+
+
 def finish_video(raw: Path, final: Path, args: argparse.Namespace) -> dict[str, Any]:
     final.parent.mkdir(parents=True, exist_ok=True)
     video_filter = (
@@ -308,18 +327,7 @@ def finish_video(raw: Path, final: Path, args: argparse.Namespace) -> dict[str, 
         check=True,
     )
     probe = ffprobe(final)
-    streams = probe.get("streams") or []
-    video = next((item for item in streams if item.get("codec_type") == "video"), None)
-    audio = next((item for item in streams if item.get("codec_type") == "audio"), None)
-    duration = float((probe.get("format") or {}).get("duration") or 0)
-    if not video or (video.get("width"), video.get("height")) != (args.final_width, args.final_height):
-        raise RuntimeError(f"final video failed resolution gate: {video}")
-    if not audio or int(audio.get("channels") or 0) != 2:
-        raise RuntimeError(f"final video failed stereo-audio gate: {audio}")
-    if abs(duration - args.final_duration) > 0.02:
-        raise RuntimeError(f"final video failed duration gate: got {duration}, expected {args.final_duration}")
-    if str(video.get("avg_frame_rate")) != "24/1":
-        raise RuntimeError(f"final video failed frame-rate gate: {video.get('avg_frame_rate')}")
+    validate_final_probe(probe, args)
     return probe
 
 

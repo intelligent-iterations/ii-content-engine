@@ -40,6 +40,30 @@ class MiniMaxH3VideoTests(unittest.TestCase):
         self.assertEqual(MODULE.validate_profile(self.args()), 362)
         with self.assertRaisesRegex(ValueError, "exactly 1280x720"):
             MODULE.validate_profile(self.args(final_height=736))
+        with self.assertRaisesRegex(ValueError, "1280x736 source"):
+            MODULE.validate_profile(self.args(width=864, height=480))
+        with self.assertRaisesRegex(ValueError, "full 15-second"):
+            MODULE.validate_profile(self.args(duration=5.0))
+
+    def test_final_probe_requires_compatible_video_and_native_stereo_audio(self):
+        probe = {
+            "format": {"duration": "15.000000"},
+            "streams": [
+                {
+                    "codec_type": "video",
+                    "codec_name": "h264",
+                    "pix_fmt": "yuv420p",
+                    "width": 1280,
+                    "height": 720,
+                    "avg_frame_rate": "24/1",
+                },
+                {"codec_type": "audio", "codec_name": "aac", "channels": 2},
+            ],
+        }
+        MODULE.validate_final_probe(probe, self.args())
+        probe["streams"][1]["channels"] = 1
+        with self.assertRaisesRegex(RuntimeError, "AAC stereo"):
+            MODULE.validate_final_probe(probe, self.args())
 
     def test_graph_matches_official_sampler_and_native_audio_path(self):
         graph = MODULE.build_prompt_graph("integrated_multimodal_description: test", self.args(), 362)
