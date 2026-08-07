@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "id": "minimax-h3-chrome-hummingbird-showcase",
+  "model": "MiniMaxAI/MiniMax-H3",
+  "mode": "text-to-video-with-native-audio",
+  "title": "Chrome Hummingbird: Three Worlds in Fifteen Seconds",
+  "render": {
+    "source_width": 1280,
+    "source_height": 736,
+    "source_frames": 362,
+    "fps": 24,
+    "final_width": 1280,
+    "final_height": 720,
+    "final_duration_seconds": 15.0,
+    "steps": 20,
+    "seed": 20260807
+  },
+  "acceptance": {
+    "require_native_stereo_audio": true,
+    "forbid_generated_speech": true,
+    "forbid_visible_text": true,
+    "require_exact_final_duration_seconds": 15.0,
+    "require_final_resolution": "1280x720",
+    "require_ffprobe": true,
+    "require_sha256": true
+  },
+  "prompt": "integrated_multimodal_description: Photorealistic premium science-fiction cinema, shot on a large-format anamorphic lens with deep blacks, precise highlights, realistic materials, physically coherent motion, restrained teal-and-amber grading, subtle film grain, and no visible text. A palm-sized origami hummingbird made from mirror-polished chrome is the single continuous hero subject across all three shots. [Shot 1] In a dark liquid-glass laboratory, an extreme macro shot begins on the dormant chrome hummingbird standing on a black reflective table. At 00:00.700, hairline cyan energy races through its folded seams. Its eye opens, its layered metal feathers unfold one by one, and its wings accelerate from delicate individual clicks into a powerful blur. The camera performs a slow 120-degree clockwise arc and gentle push-in while reflections and shallow depth of field remain physically consistent. [Shot 2] At 00:05.000, on the first heavy musical beat, the hummingbird launches straight past the lens and the camera whip-pans into a fast stabilized chase behind it through a rain-soaked neon megacity canyon at night. It banks tightly between moving vehicles and glass towers; raindrops bead, streak, and scatter from its chrome wings, neon reflections travel correctly across its body, and the camera maintains the same recognizable bird design without morphing. [Shot 3] At 00:10.000, the hummingbird punches upward through the storm cloud ceiling into a vast golden sunrise above the clouds. The camera cranes and arcs around it in one majestic motion as thousands of tiny luminous chrome feathers peel outward into the silhouette of a colossal phoenix, circle once with believable momentum, then flow back together into the original hummingbird hovering perfectly still before the sun at 00:14.500. End on one crisp symmetrical hero frame. No people, dialogue, narration, captions, subtitles, logos, watermarks, letters, or readable symbols.\n\noverall_soundscape: Native stereo sound follows the camera and action precisely: a low laboratory electrical hum, delicate left-to-right metallic feather clicks, a rapidly intensifying wing buzz, a sharp launch whoosh crossing the stereo field, heavy rain and distant thunder in the city, droplets striking metal, then open high-altitude wind and bright crystalline reassembly chimes. No voices or speech.\n\nnon_diegetic_music: An original cinematic hybrid score begins as a restrained sub-bass pulse with glass harmonics, adds driving orchestral percussion exactly at 00:05.000, expands into brass and choir-like synthesizer textures at 00:10.000, then resolves with one enormous clean impact and a long shimmering tail at 00:14.500.",
+  "research_basis": [
+    "The supplied H3 review transcript highlights the 15-second ceiling, cinema-grade audiovisual output, stronger consistency than raw action speed, and the need for intentional shot planning.",
+    "Official MiniMax H3 prompt guide: integrated multimodal scene description plus overall soundscape and non-diegetic music.",
+    "Official ComfyUI H3 workflow: 24 fps, 20 steps, res_multistep sampler, native stereo audio, and 17k+5 frame alignment.",
+    "The 1280x736 official 0.9 MP canvas is center-cropped to exact 1280x720 without upscaling.",
+    "A single hero subject and explicit timed cuts reduce identity drift while demonstrating instruction following and camera motion."
+  ],
+  "research_source": {
+    "url": "https://www.youtube.com/watch?v=j2pRgZpFPCw",
+    "transcript_sha256": "3ee17d8b49e1d0bf8c65fb0f9f5ac261151c35418b3370be05404da2442d5309",
+    "transcript_segments": 522
+  }
+}
