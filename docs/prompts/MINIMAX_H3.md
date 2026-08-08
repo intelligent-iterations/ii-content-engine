@@ -31,6 +31,13 @@ captions, or logos; exact text belongs in deterministic post-production.
 - Source: 1280x736, 362 frames, 24 fps, 20 `res_multistep` sampling steps.
 - Delivery: center-crop without upscaling, encode H.264/AAC, and trim to exact
   1280x720 at 15.000 seconds with stereo audio.
+- RTX 3090 baseline: use the unaccelerated sampler for the first accepted
+  render. Community tests show that SageAttention and Spectrum can reduce
+  render time, but Spectrum can trade away coherence. Add an accelerator only
+  after comparing its accepted output against the pinned baseline.
+- System memory: H3 is a 33B-class workload and may offload aggressively on a
+  24 GB card. Preserve substantial host RAM and swap headroom, retain GPU/RAM
+  telemetry, and fail rather than silently lower the requested quality.
 
 The source frame count follows H3's `17k+5` grid. Fifteen seconds at 24 fps
 therefore renders 362 frames (15.083 seconds) before the acceptance transcode
@@ -43,3 +50,16 @@ clip, direct prompt, executable API graph, model and ComfyUI pins, hashes, and
 FFprobe data. The final gate requires 1280x720, 24 fps, 15.000 seconds, H.264
 video, and two-channel audio. A run with missing speech constraints, missing
 audio, unexpected dimensions, or an unverified model file fails closed.
+
+## License boundary
+
+The MiniMax H3 Community License dated 2026-08-02 limits use to its
+"Applicable Territory" and excludes the European Union, United Kingdom,
+Republic of Korea, and United States. It also requires downstream use terms,
+safeguards, and prominent MiniMax H3 identification for commercial services.
+Do not expose this workflow to an excluded territory or to a workspace that
+has not accepted the applicable terms. The internal Chad Lite deployment is a
+Canada-scoped workflow; this is an operational restriction, not legal advice.
+
+Authoritative license:
+<https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/LICENSE>.

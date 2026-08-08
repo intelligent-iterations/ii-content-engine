@@ -27,6 +27,8 @@
   "prompt": "integrated_multimodal_description: Photorealistic premium science-fiction cinema, shot on a large-format anamorphic lens with deep blacks, precise highlights, realistic materials, physically coherent motion, restrained teal-and-amber grading, subtle film grain, and no visible text. A palm-sized origami hummingbird made from mirror-polished chrome is the single continuous hero subject across all three shots. [Shot 1] In a dark liquid-glass laboratory, an extreme macro shot begins on the dormant chrome hummingbird standing on a black reflective table. At 00:00.700, hairline cyan energy races through its folded seams. Its eye opens, its layered metal feathers unfold one by one, and its wings accelerate from delicate individual clicks into a powerful blur. The camera performs a slow 120-degree clockwise arc and gentle push-in while reflections and shallow depth of field remain physically consistent. [Shot 2] At 00:05.000, on the first heavy musical beat, the hummingbird launches straight past the lens and the camera whip-pans into a fast stabilized chase behind it through a rain-soaked neon megacity canyon at night. It banks tightly between moving vehicles and glass towers; raindrops bead, streak, and scatter from its chrome wings, neon reflections travel correctly across its body, and the camera maintains the same recognizable bird design without morphing. [Shot 3] At 00:10.000, the hummingbird punches upward through the storm cloud ceiling into a vast golden sunrise above the clouds. The camera cranes and arcs around it in one majestic motion as thousands of tiny luminous chrome feathers peel outward into the silhouette of a colossal phoenix, circle once with believable momentum, then flow back together into the original hummingbird hovering perfectly still before the sun at 00:14.500. End on one crisp symmetrical hero frame. No people, dialogue, narration, captions, subtitles, logos, watermarks, letters, or readable symbols.\n\noverall_soundscape: Native stereo sound follows the camera and action precisely: a low laboratory electrical hum, delicate left-to-right metallic feather clicks, a rapidly intensifying wing buzz, a sharp launch whoosh crossing the stereo field, heavy rain and distant thunder in the city, droplets striking metal, then open high-altitude wind and bright crystalline reassembly chimes. No voices or speech.\n\nnon_diegetic_music: An original cinematic hybrid score begins as a restrained sub-bass pulse with glass harmonics, adds driving orchestral percussion exactly at 00:05.000, expands into brass and choir-like synthesizer textures at 00:10.000, then resolves with one enormous clean impact and a long shimmering tail at 00:14.500.",
   "research_basis": [
     "The supplied H3 review transcript highlights the 15-second ceiling, cinema-grade audiovisual output, stronger consistency than raw action speed, and the need for intentional shot planning.",
+    "The supplied local-workflow transcript recommends 720p as the practical high-quality generation target and documents the quality cost of Spectrum acceleration.",
+    "A same-day community comparison on an RTX 3090 reports 18m25s unaccelerated versus 11m06s with SageAttention and 7m33s with SageAttention plus Spectrum at 0.4 MP; commenters observed that Spectrum can reduce coherency.",
     "Official MiniMax H3 prompt guide: integrated multimodal scene description plus overall soundscape and non-diegetic music.",
     "Official ComfyUI H3 workflow: 24 fps, 20 steps, res_multistep sampler, native stereo audio, and 17k+5 frame alignment.",
     "The 1280x736 official 0.9 MP canvas is center-cropped to exact 1280x720 without upscaling.",
@@ -34,7 +36,28 @@
   ],
   "research_source": {
     "url": "https://www.youtube.com/watch?v=j2pRgZpFPCw",
-    "transcript_sha256": "3ee17d8b49e1d0bf8c65fb0f9f5ac261151c35418b3370be05404da2442d5309",
+    "plain_text_sha256": "87c9966da817dfdcb6dcbaab99a79dd9a9eaf6d25099eebee4f9d4bdf1110e99",
+    "timestamped_text_sha256": "df7260cacc07658a0f0baccaf5199bf13f58317988a3c77074cf297fe193f9a7",
     "transcript_segments": 522
-  }
+  },
+  "additional_research_sources": [
+    {
+      "url": "https://www.youtube.com/watch?v=f35KjIMsTnU",
+      "plain_text_sha256": "6ae82bcd5e7bc1c924990a5026b7adcf27c8dffd3b2a0748d8acaa384efddaec",
+      "timestamped_text_sha256": "49b456354c044c9bf5e469aeec41178499522063bab760a9c7600863c8208fc6",
+      "transcript_segments": 549
+    },
+    {
+      "url": "https://www.reddit.com/r/comfyui/comments/1vi7yxw/minimax_h3_performance_comparison_no_acceleration/",
+      "observed_hardware": "RTX 3090 24 GB with 64 GB system RAM",
+      "observed_profile": "15 seconds at 0.4 MP",
+      "observed_generation_seconds": {
+        "unaccelerated": 1105,
+        "sage_attention": 666,
+        "spectrum": 677,
+        "sage_attention_and_spectrum": 453
+      },
+      "evidence_class": "community observation; not an acceptance contract"
+    }
+  ]
 }
